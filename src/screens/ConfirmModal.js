@@ -4,16 +4,19 @@ import { motion } from 'framer-motion'; // Для анимации
 
 // Стили те же, что и у EquipmentSelectModal
 const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
   width: '90%',
-  maxWidth: 500,
+  maxWidth: 420,
+  minWidth: 280,
+  minHeight: 120,
+  maxHeight: '90vh',
   bgcolor: '#fff0fa',
-  borderRadius: '16px',
-  boxShadow: '0 8px 32px #ffb7e0aa',
-  p: 4,
+  border: 'none',
+  borderRadius: '18px',
+  boxShadow: '0 8px 32px rgba(255, 105, 180, 0.25)',
+  p: { xs: 2, sm: 4 },
+  textAlign: 'center',
+  outline: 'none',
+  overflowY: 'auto',
 };
 
 // Анимация для появления
@@ -41,6 +44,9 @@ function ConfirmModal({ open, onClose, equipment = [], client = "Не указа
         variants:backdropVariants,
         transition:{ duration: 0.2 }
       }}
+      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      container={document.body}
+      disablePortal={false}
     >
       <motion.div initial="hidden" animate="visible" exit="hidden" variants={modalVariants}>
           <Box sx={modalStyle}>
