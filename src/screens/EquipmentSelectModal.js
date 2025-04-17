@@ -10,18 +10,18 @@ import './EquipmentSelectModal.anim.css';
 
 // Стили для модального окна (вынесены для читаемости)
 const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
   width: '90%',
-  maxWidth: 500,
+  maxWidth: 420,
+  minWidth: 280,
+  minHeight: 120,
+  maxHeight: '90vh',
   bgcolor: '#fff0fa',
   border: 'none',
-  borderRadius: '16px',
-  boxShadow: '0 8px 32pxrgba(255, 126, 197, 0.33)',
-  p: 4,
+  borderRadius: '18px',
+  boxShadow: '0 8px 32px rgba(255, 105, 180, 0.25)', // розовая тень
+  p: { xs: 2, sm: 4 },
   outline: 'none',
+  overflowY: 'auto',
 };
 
 function EquipmentSelectModal({ open, onClose, equipmentList = [], requiredTypes = [], onSelect }) {
@@ -81,10 +81,13 @@ function EquipmentSelectModal({ open, onClose, equipmentList = [], requiredTypes
       closeAfterTransition
       aria-labelledby="equipment-select-modal-title"
       aria-describedby="equipment-select-modal-description"
+      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      container={document.body}
+      disablePortal={false}
     >
       <Box sx={modalStyle} className="equipment-modal-appear">
         <Typography variant="h6" component="h2" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-          <EmojiObjectsIcon color="primary" sx={{ fontSize: 28 }} />
+          <EmojiObjectsIcon sx={{ fontSize: 28, color: '#ff69b4' }} />
           Выбор оборудования <span role="img" aria-label="tools">🛠️</span>
         </Typography>
         <Divider sx={{ mb: 2 }} />
@@ -97,20 +100,19 @@ function EquipmentSelectModal({ open, onClose, equipmentList = [], requiredTypes
                   checked={selectedIds.includes(eq.id)}
                   tabIndex={-1}
                   disableRipple
-                  color="primary"
-                  sx={{ mr: 1 }}
+                  sx={{ mr: 1, color: '#ff69b4', '&.Mui-checked': { color: '#ff69b4' } }}
                 />
                 {/* Иконка по типу оборудования + эмодзи */}
-                {eq.type === 'Роутер' && <RouterIcon sx={{ color: '#1976d2', mr: 1 }} />}
-                {eq.type === 'Память' && <MemoryIcon sx={{ color: '#388e3c', mr: 1 }} />}
-                {eq.type === 'Инструмент' && <BuildIcon sx={{ color: '#fbc02d', mr: 1 }} />}
+                {eq.type === 'Роутер' && <RouterIcon sx={{ color: '#ff69b4', mr: 1 }} />}
+                {eq.type === 'Память' && <MemoryIcon sx={{ color: '#ff69b4', mr: 1 }} />}
+                {eq.type === 'Инструмент' && <BuildIcon sx={{ color: '#ff69b4', mr: 1 }} />}
                 {/* Эмодзи для других типов */}
                 {eq.type !== 'Роутер' && eq.type !== 'Память' && eq.type !== 'Инструмент' && (
                   <span className="equipment-emoji" role="img" aria-label="equipment">🔧</span>
                 )}
                 <ListItemText
                   primary={eq.name}
-                  secondary={<span style={{ color: '#888' }}>{eq.type}</span>}
+                  secondary={<span style={{ color: '#ff69b4' }}>{eq.type}</span>}
                   sx={{ ml: 1 }}
                 />
               </ListItemButton>
@@ -126,8 +128,8 @@ function EquipmentSelectModal({ open, onClose, equipmentList = [], requiredTypes
             ⚠️ {selectionError}
           </Alert>
         )}
-        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end', background: 'none' }}>
-          <Button onClick={onClose} className="cancel-btn-anim" sx={{ mr: 1, borderRadius: 2, px: 3 }}>
+        <Box sx={{ mt: 3, display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'center', alignItems: 'center', gap: 2, background: 'none' }}>
+          <Button onClick={onClose} className="cancel-btn-anim" sx={{ mb: { xs: 1, sm: 0 }, borderRadius: 2, px: 3, color: '#ff3cab' }}>
             ❌ Отмена
           </Button>
           <Button
@@ -135,7 +137,7 @@ function EquipmentSelectModal({ open, onClose, equipmentList = [], requiredTypes
             onClick={handleSubmit}
             disabled={selectedIds.length === 0 || equipmentList.length === 0}
             className="confirm-btn-anim"
-            sx={{ borderRadius: 2, px: 3, boxShadow: '0 2px 8px #ff69b433' }}
+            sx={{ borderRadius: 2, px: 3, background: '#ff69b4', color: '#fff', '&:hover': { background: '#ff3cab' }, boxShadow: '0 2px 8px #ff69b433' }}
             >
             ✅ Подтвердить
           </Button>
